@@ -21,7 +21,7 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/ivFavouritePoster"
+            android:id="@+id/ivSearchPoster"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
@@ -38,7 +38,7 @@
 
     <!-- Movie Title -->
     <TextView
-        android:id="@+id/tvFavouriteTitle"
+        android:id="@+id/tvSearchTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -54,7 +54,7 @@
 
     <!-- Release Date -->
     <TextView
-        android:id="@+id/tvFavouriteReleaseDate"
+        android:id="@+id/tvSearchReleaseDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -63,11 +63,11 @@
         android:textSize="13sp"
         android:textStyle="normal"
         app:layout_constraintStart_toEndOf="@id/posterContainer"
-        app:layout_constraintTop_toBottomOf="@id/tvFavouriteTitle" />
+        app:layout_constraintTop_toBottomOf="@id/tvSearchTitle" />
 
     <!-- Rating -->
     <TextView
-        android:id="@+id/tvFavouriteRating"
+        android:id="@+id/tvSearchRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
@@ -79,9 +79,9 @@
         android:textColor="#333333"
         android:textSize="12sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/tvFavouriteReleaseDate"
-        app:layout_constraintTop_toTopOf="@id/tvFavouriteReleaseDate"
-        app:layout_constraintBottom_toBottomOf="@id/tvFavouriteReleaseDate" />
+        app:layout_constraintStart_toEndOf="@id/tvSearchReleaseDate"
+        app:layout_constraintTop_toTopOf="@id/tvSearchReleaseDate"
+        app:layout_constraintBottom_toBottomOf="@id/tvSearchReleaseDate" />
 
     <!-- Right Arrow -->
     <ImageView

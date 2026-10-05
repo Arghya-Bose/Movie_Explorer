@@ -3,7 +3,15 @@
     <style name="Base.Theme.MovieExplorer" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:statusBarColor">#0D2B4D</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+    <style name="Theme.MovieExplorer" parent="Base.Theme.MovieExplorer" />
+
+    <style name="Theme.MovieExplorer.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@android:color/black</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/logo_3</item>
+        <item name="postSplashScreenTheme">@style/Theme.MovieExplorer</item>
     </style>
 
-    <style name="Theme.MovieExplorer" parent="Base.Theme.MovieExplorer" />
 </resources>

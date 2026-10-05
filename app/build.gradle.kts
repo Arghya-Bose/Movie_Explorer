@@ -1,7 +1,9 @@
+import org.jetbrains.kotlin.commonizer.OptimisticNumberCommonizationEnabledKey.alias
 import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.ksp)
 }
 val localProperties = Properties()
 
@@ -18,6 +20,7 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+
     }
 
     defaultConfig {
@@ -72,4 +75,15 @@ dependencies {
 
     implementation("io.coil-kt.coil3:coil:3.3.0")
     implementation("io.coil-kt.coil3:coil-network-okhttp:3.3.0")
+
+    implementation("androidx.room:room-runtime:2.8.0")
+    implementation("androidx.room:room-ktx:2.8.0")
+    ksp("androidx.room:room-compiler:2.8.0")
+
+    implementation("com.google.android.material:material:1.13.0")
+    implementation("androidx.core:core-splashscreen:1.0.1")
+
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
+
+
 }

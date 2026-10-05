@@ -1,4 +1,4 @@
-package com.example.movieexplorer.ui.home
+package com.example.movieexplorer.ui.search
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,36 +6,35 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil3.load
 import coil3.request.crossfade
-import com.example.movieexplorer.databinding.ItemMovieBinding
+import com.example.movieexplorer.databinding.ItemSearchMovieBinding
 import com.example.movieexplorer.model.Movie
 
-class MovieAdapter(
-    private val movies: List<Movie>,
+class SearchAdapter(
+    private var movies: List<Movie>,
     private val onMovieClick: (Movie) -> Unit
+) : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
 
-) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
-
-    inner class MovieViewHolder(
-        private val binding: ItemMovieBinding
+    inner class SearchViewHolder(
+        private val binding: ItemSearchMovieBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie: Movie) {
 
-            binding.tvMovieTitle.text = movie.title
+            binding.tvSearchTitle.text = movie.title
 
-            binding.tvRating.text =
+            binding.tvSearchReleaseDate.text =
+                movie.releaseDate?.take(4) ?: "N/A"
+
+            binding.tvSearchRating.text =
                 "★ %.1f".format(movie.rating)
 
             val posterUrl = movie.posterPath?.let {
                 "https://image.tmdb.org/t/p/w500$it"
             }
-            binding.root.setOnClickListener {
-                onMovieClick(movie)
-            }
 
             binding.progressBar.visibility = View.VISIBLE
 
-            binding.ivMoviePoster.load(posterUrl) {
+            binding.ivSearchPoster.load(posterUrl) {
 
                 crossfade(true)
 
@@ -43,30 +42,42 @@ class MovieAdapter(
                     onSuccess = { _, _ ->
                         binding.progressBar.visibility = View.GONE
                     },
+
                     onError = { _, _ ->
                         binding.progressBar.visibility = View.GONE
                     }
                 )
             }
+
+            binding.root.setOnClickListener {
+                onMovieClick(movie)
+            }
         }
+    }
+
+    fun updateMovies(newMovies: List<Movie>) {
+
+        movies = newMovies
+
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): MovieViewHolder {
+    ): SearchViewHolder {
 
-        val binding = ItemMovieBinding.inflate(
+        val binding = ItemSearchMovieBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
 
-        return MovieViewHolder(binding)
+        return SearchViewHolder(binding)
     }
 
     override fun onBindViewHolder(
-        holder: MovieViewHolder,
+        holder: SearchViewHolder,
         position: Int
     ) {
         holder.bind(movies[position])

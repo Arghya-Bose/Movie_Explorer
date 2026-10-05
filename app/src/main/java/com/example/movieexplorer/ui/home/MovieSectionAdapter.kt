@@ -5,11 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieexplorer.databinding.ItemMovieSectionBinding
+import com.example.movieexplorer.model.Movie
 import com.example.movieexplorer.model.MovieSection
 
 class MovieSectionAdapter(
-    private val sections: List<MovieSection>
+    private var sections: List<MovieSection>,
+    private val onMovieClick: (Movie) -> Unit
 ) : RecyclerView.Adapter<MovieSectionAdapter.SectionViewHolder>() {
+
+    private var isLoading = false
 
     inner class SectionViewHolder(
         private val binding: ItemMovieSectionBinding
@@ -27,11 +31,28 @@ class MovieSectionAdapter(
                     false
                 )
 
-                adapter = MovieAdapter(section.movies)
+                adapter = if (isLoading) {
+                    ShimmerMovieAdapter()
+                } else {
+                    MovieAdapter(
+                        section.movies,
+                        onMovieClick
+                    )
+                }
 
                 setHasFixedSize(true)
             }
         }
+    }
+
+    fun updateLoadingState(loading: Boolean) {
+        isLoading = loading
+        notifyDataSetChanged()
+    }
+
+    fun updateSections(newSections: List<MovieSection>) {
+        sections = newSections
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(

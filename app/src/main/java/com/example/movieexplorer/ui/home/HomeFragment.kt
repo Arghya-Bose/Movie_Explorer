@@ -1,5 +1,6 @@
 package com.example.movieexplorer.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieexplorer.databinding.FragmentHomeBinding
+import com.example.movieexplorer.model.MovieSection
+import com.example.movieexplorer.ui.details.DetailsActivity
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
@@ -44,7 +47,6 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
-
         observeViewModel()
 
         viewModel.loadMovies()
@@ -53,13 +55,34 @@ class HomeFragment : Fragment() {
     private fun setupRecyclerView() {
 
         sectionAdapter = MovieSectionAdapter(
-            emptyList()
-        )
+            listOf(
+                MovieSection("Popular Movies", emptyList()),
+                MovieSection("Now Playing", emptyList()),
+                MovieSection("Upcoming", emptyList()),
+                MovieSection("Top Rated", emptyList())
+            )
+        ) { movie ->
+
+            val intent = Intent(
+                requireContext(),
+                DetailsActivity::class.java
+            )
+
+            intent.putExtra(
+                "movieId",
+                movie.id
+            )
+
+            startActivity(intent)
+        }
+
+        sectionAdapter.updateLoadingState(true)
 
         binding.rvHomeSections.apply {
 
-            layoutManager =
-                LinearLayoutManager(requireContext())
+            layoutManager = LinearLayoutManager(
+                requireContext()
+            )
 
             adapter = sectionAdapter
 
@@ -79,11 +102,9 @@ class HomeFragment : Fragment() {
 
                     viewModel.sections.collect { sections ->
 
-                        sectionAdapter =
-                            MovieSectionAdapter(sections)
-
-                        binding.rvHomeSections.adapter =
-                            sectionAdapter
+                        sectionAdapter.updateSections(
+                            sections
+                        )
                     }
                 }
 
@@ -91,8 +112,7 @@ class HomeFragment : Fragment() {
 
                     viewModel.isLoading.collect { isLoading ->
 
-                        // We will add a proper loading UI next.
-                        // For now, nothing is required here.
+                        sectionAdapter.updateLoadingState(isLoading)
                     }
                 }
 
@@ -101,7 +121,8 @@ class HomeFragment : Fragment() {
                     viewModel.error.collect { errorMessage ->
 
                         if (errorMessage != null) {
-                            // We will add a proper error/retry UI next.
+
+                            // Error UI / retry will be added later.
                         }
                     }
                 }
@@ -110,7 +131,9 @@ class HomeFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+
         super.onDestroyView()
+
         _binding = null
     }
 }

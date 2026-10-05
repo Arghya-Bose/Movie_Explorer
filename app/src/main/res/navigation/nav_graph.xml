@@ -20,4 +20,5 @@
         android:name="com.example.movieexplorer.ui.favourites.FavouritesFragment"
         android:label="Favourites" />
 
+
 </navigation>
