@@ -63,7 +63,6 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:contentDescription="@string/add_to_favourites"
-                    android:src="@drawable/ic_favorite"
                     app:tint="@android:color/white" />
 
             </FrameLayout>
