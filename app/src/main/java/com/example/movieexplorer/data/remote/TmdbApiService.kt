@@ -1,5 +1,4 @@
 package com.example.movieexplorer.data.remote
-
 import com.example.movieexplorer.data.remote.dto.MovieDetailsDto
 import com.example.movieexplorer.data.remote.dto.MovieResponse
 import retrofit2.http.GET
